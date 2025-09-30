@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TalentSphere</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-white font-sans">
+
+  <!-- Landing Page -->
+  <section id="landing" class="flex flex-col items-center justify-center h-screen space-y-6">
+    <h1 class="text-4xl font-bold">Welcome to TalentSphere</h1>
+    <p class="text-gray-400">Select your role to continue</p>
+    <div class="flex space-x-4">
+      <button onclick="showLogin('talent')" class="px-6 py-3 bg-blue-600 rounded-xl hover:bg-blue-500">Talent</button>
+      <button onclick="showLogin('industry')" class="px-6 py-3 bg-green-600 rounded-xl hover:bg-green-500">Industry</button>
+      <button onclick="showLogin('audience')" class="px-6 py-3 bg-purple-600 rounded-xl hover:bg-purple-500">Audience</button>
+    </div>
+  </section>
+
+  <!-- Login Page -->
+  <section id="login" class="hidden h-screen flex flex-col items-center justify-center">
+    <div class="bg-gray-900 p-8 rounded-2xl w-96">
+      <h2 id="login-title" class="text-2xl font-bold mb-4">Login</h2>
+      <form id="login-form" method="POST" action="/api/login">
+        <input name="email" type="email" placeholder="Email" required
+          class="w-full mb-3 p-2 rounded bg-gray-800 border border-gray-700" />
+        <input name="password" type="password" placeholder="Password" required
+          class="w-full mb-3 p-2 rounded bg-gray-800 border border-gray-700" />
+        <button type="submit" class="w-full bg-blue-600 py-2 rounded hover:bg-blue-500">Login</button>
+      </form>
+      <p class="text-sm text-gray-400 mt-3">
+        Not registered? <a href="#" onclick="showRegister()" class="text-blue-400 underline">Register</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Register Page -->
+  <section id="register" class="hidden h-screen flex flex-col items-center justify-center">
+    <div class="bg-gray-900 p-8 rounded-2xl w-96">
+      <h2 class="text-2xl font-bold mb-4">Register</h2>
+      <form id="register-form" method="POST" action="/api/register">
+        <input name="username" placeholder="Username" required
+          class="w-full mb-3 p-2 rounded bg-gray-800 border border-gray-700" />
+        <input name="email" type="email" placeholder="Email" required
+          class="w-full mb-3 p-2 rounded bg-gray-800 border border-gray-700" />
+        <input name="password" type="password" placeholder="Password" required
+          class="w-full mb-3 p-2 rounded bg-gray-800 border border-gray-700" />
+        <button type="submit" class="w-full bg-green-600 py-2 rounded hover:bg-green-500">Register</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Talent Dashboard -->
+  <section id="talent-dashboard" class="hidden p-8">
+    <h2 class="text-3xl font-bold mb-6">🎭 Talent Dashboard</h2>
+
+    <!-- Profile Settings -->
+    <form id="profile-form" method="POST" action="/api/update-profile" class="bg-gray-900 p-6 rounded-2xl mb-6">
+      <h3 class="text-xl font-semibold mb-4">Profile Settings</h3>
+      <input name="username" placeholder="Username" class="w-full mb-2 p-2 rounded bg-gray-800 border border-gray-700" />
+      <textarea name="bio" placeholder="Bio" class="w-full mb-2 p-2 rounded bg-gray-800 border border-gray-700"></textarea>
+      <input name="skills" placeholder="Skills" class="w-full mb-2 p-2 rounded bg-gray-800 border border-gray-700" />
+      <input name="achievements" placeholder="Achievements" class="w-full mb-2 p-2 rounded bg-gray-800 border border-gray-700" />
+      <input name="portfolio" placeholder="Portfolio Links" class="w-full mb-2 p-2 rounded bg-gray-800 border border-gray-700" />
+      <button type="submit" class="bg-blue-600 px-4 py-2 rounded">Save</button>
+    </form>
+
+    <!-- Upload Section -->
+    <form id="upload-form" method="POST" action="/api/upload" enctype="multipart/form-data" class="bg-gray-900 p-6 rounded-2xl">
+      <h3 class="text-xl font-semibold mb-4">Upload Video</h3>
+      <input name="video" type="file" accept="video/*" required class="mb-3" />
+      <select name="category" class="w-full mb-3 p-2 rounded bg-gray-800 border border-gray-700">
+        <option value="">Select Category</option>
+        <option>Acting</option>
+        <option>Singing</option>
+        <option>Music</option>
+        <option>Scriptwriting</option>
+      </select>
+      <button type="submit" class="bg-green-600 px-4 py-2 rounded">Upload</button>
+    </form>
+  </section>
+
+  <!-- Industry Dashboard -->
+  <section id="industry-dashboard" class="hidden p-8">
+    <h2 class="text-3xl font-bold mb-6">🎬 Industry Dashboard</h2>
+    <div class="bg-gray-900 p-6 rounded-2xl">
+      <h3 class="text-xl font-semibold mb-4">Tagged Videos</h3>
+      <div class="bg-gray-800 p-4 rounded-xl mb-3">
+        <p class="font-semibold">Talent Video</p>
+        <form method="POST" action="/api/comment" class="mt-2">
+          <textarea name="comment" placeholder="Leave constructive comment" class="w-full p-2 rounded bg-gray-700"></textarea>
+          <div class="flex space-x-2 mt-3">
+            <button type="submit" class="bg-blue-600 px-3 py-1 rounded">Comment</button>
+            <button formaction="/api/like" class="bg-green-600 px-3 py-1 rounded">Like</button>
+            <button formaction="/api/shortlist" class="bg-yellow-600 px-3 py-1 rounded">Shortlist</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Audience Dashboard -->
+  <section id="audience-dashboard" class="hidden p-8">
+    <h2 class="text-3xl font-bold mb-6">👥 Audience Dashboard</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-gray-900 p-6 rounded-2xl">
+        <p class="font-semibold">Talent Performance</p>
+        <p class="text-gray-400 text-sm">Category: Singing</p>
+        <form method="POST">
+          <div class="flex space-x-2 mt-3">
+            <button formaction="/api/like" class="bg-blue-600 px-3 py-1 rounded">Like</button>
+            <button formaction="/api/share" class="bg-purple-600 px-3 py-1 rounded">Share</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    let currentRole = null;
+
+    function showLogin(role) {
+      currentRole = role;
+      document.getElementById('landing').classList.add('hidden');
+      document.getElementById('login').classList.remove('hidden');
+      document.getElementById('login-title').innerText = role.charAt(0).toUpperCase() + role.slice(1) + ' Login';
+    }
+
+    function showRegister() {
+      document.getElementById('login').classList.add('hidden');
+      document.getElementById('register').classList.remove('hidden');
+    }
+
+    // Simulate dashboard navigation after login
+    document.getElementById("login-form").addEventListener("submit", function(e) {
+      e.preventDefault(); // remove when backend ready
+      document.getElementById('login').classList.add('hidden');
+      if (currentRole === 'talent') {
+        document.getElementById('talent-dashboard').classList.remove('hidden');
+      } else if (currentRole === 'industry') {
+        document.getElementById('industry-dashboard').classList.remove('hidden');
+      } else if (currentRole === 'audience') {
+        document.getElementById('audience-dashboard').classList.remove('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
